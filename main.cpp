@@ -283,6 +283,24 @@ class Matrix
         return swapped;
     }
 
+    Matrix updateElement(int row, int col, int val)
+    {
+        int dim  = this->getSize() - 1;
+        Matrix updated = *this; //copy
+
+        if (row < 0 || row > dim || col < 0 || col > dim)
+        {
+            std::cout << "Selected coordinates out of bounds.\n";
+        }
+        else
+        {
+            updated.matrix.at(row).at(col) = val;
+        }
+
+        return updated;
+
+    }
+
 };
 
 void run(Matrix A, Matrix B)
@@ -316,7 +334,7 @@ void run(Matrix A, Matrix B)
     char swap_r;
     std::cin >> swap_r;
 
-    if (swap_r == 'Y')
+    if (toupper(swap_r) == 'Y')
     {
         std::cout << "First row to swap (starting at 0): ";
         std::cin >> rowa;
@@ -345,7 +363,7 @@ void run(Matrix A, Matrix B)
     char swap_c;
     std::cin >> swap_c;
 
-    if (swap_c == 'Y')
+    if (toupper(swap_c) == 'Y')
     {
         std::cout << "First col to swap (starting at 0): ";
         std::cin >> cola;
@@ -364,8 +382,34 @@ void run(Matrix A, Matrix B)
         col_swap.printMatrix();
     }
 
-    
+    //update element
+    std::cout << "Element Update(0,0 to 100 by default):\n";
+    Matrix update;
+    int r,c,val;
+    char u;
+    std::cout << "Pick coords and val?(Y/N): ";
+    std::cin >> u;
 
+    if (toupper(u) =='Y')
+    {
+        std::cout << "Enter a row (starting at 0): ";
+        std::cin >> r;
+        std::cout << "Enter a column (starting at 0): ";
+        std::cin >> c;
+        std::cout << "Enter a value: ";
+        std::cin >> val;
+
+        update = A.updateElement(r,c,val);
+    }
+    else
+    {
+        update = A.updateElement(0,0,100);
+    }
+
+    if (update.getMatrix() != A.getMatrix())
+    {
+        update.printMatrix();
+    }
 
 }
 
