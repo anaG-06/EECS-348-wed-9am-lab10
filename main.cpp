@@ -37,10 +37,20 @@ class Matrix
     }
     
     //constructing matrix without file
-    Matrix ()
+    Matrix()
     {
-        std::cout << "Matrix created\n";
+        // std::cout << "Matrix created\n";
         n = matrix.size();
+    }
+
+    int getSize()
+    {
+        return n;
+    }
+
+    void setSize(int n)
+    {
+        this->n = n;
     }
     
     bool loadMatrix(std::string filename, int start)
@@ -124,7 +134,7 @@ class Matrix
 
         }
         
-        std::cout << "Matrix created using: " << filename << "\n";
+        // std::cout << "Matrix created using: " << filename << "\n";
         return true;
     }
 
@@ -141,22 +151,59 @@ class Matrix
     }
 
     //overloading addition
+    friend Matrix operator+(Matrix A, Matrix B)
+    {
+        Matrix result;
+        result.setSize(A.getSize());
+
+        std::vector<int> row;
+        int numA;
+        int numB;
+        
+        for (int i = 0; i < A.getSize(); i++)
+        {
+            for (int j = 0; j < A.getSize(); j++)
+            {
+                numA = A.matrix.at(i).at(j);
+                numB = B.matrix.at(i).at(j);
+
+                row.push_back(numA + numB); //add them together and push to row
+            }
+
+            result.matrix.push_back(row); //push row into result matrix
+            row.clear();
+        }
+        
+        return result;
+
+    }
 
 
 };
 
+void run(Matrix A, Matrix B)
+{
+    //printing matricies
+    std::cout << "Matrix A: \n";
+    A.printMatrix();
+    std::cout << "\nMatrix B: \n";
+    B.printMatrix();
+
+    //adding matrices
+    Matrix product = A + B;
+    std::cout << "A + B: \n";
+    product.printMatrix();
+}
+
 int main()
 {
     Matrix a("input-1.txt", 1);
-
     Matrix b("input-1.txt", 0);
 
-    //printing matricies
-    std::cout << "Matrix A: \n";
-    a.printMatrix();
-    std::cout << "\nMatrix B: \n";
-    b.printMatrix();
+    if (a.getSize() > 0 && b.getSize() > 0) //checks that matrix was created properly
+    {
+        run(a,b);
+    }
 
-    
     return 0;
 }
