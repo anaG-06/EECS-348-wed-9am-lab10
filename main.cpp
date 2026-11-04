@@ -60,6 +60,8 @@ class Matrix
             std::string element;
             int elementINT;
 
+            int temp_n = n;
+
             
             //open and read file
             if (myFile.is_open())
@@ -79,13 +81,20 @@ class Matrix
             n = stoi(fileRaw[0]); //set dimensions
             
             //where to start reading for matrix formation
+            // 1 signifies that reading should start from the top
             if (start != 1)
             {
-                start = n + 1;
+                start = n + 1; //otherwise start after first matrix
+                temp_n = n * 2;
+            }
+            else
+            {
+                start = 1;
+                temp_n = n;
             }
             
             //create matrix
-            for (int i = start; i <= n; i++)
+            for (int i = start; i <= temp_n; i++)
             {
                 std::string temp = fileRaw.at(i).c_str(); //hold row of text
                 
