@@ -216,6 +216,21 @@ class Matrix
         return result;
     }
 
+    void sumDiagonal()
+    {
+        int main = 0;
+        int secondary = 0;
+        int dim = this->getSize();
+
+        for (int i = 0; i < dim; i++)
+        {
+            main += this->matrix.at(i).at(i);
+            secondary += this->matrix.at(i).at(dim-1-i);
+        }
+
+        std::cout << "\nMain Diagonal Sum: " << main;
+        std::cout << "\nSecondary Diagonal Sum: " << secondary<<"\n";
+    }
 
 };
 
@@ -232,10 +247,16 @@ void run(Matrix A, Matrix B)
     std::cout << "\nA + B: \n";
     sum.printMatrix();
 
-    //
+    //multiplying matricies
     Matrix product = A * B;
     std::cout << "\nA * B: \n";
     product.printMatrix();
+
+    //finding diagonals
+    std::cout<< "\nDiagonal sums for Matrix A:";
+    A.sumDiagonal();
+
+
 }
 
 int main()
