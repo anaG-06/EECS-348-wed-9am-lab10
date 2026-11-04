@@ -307,9 +307,30 @@ void run(Matrix A, Matrix B)
     std::cout<< "\nDiagonal sums for Matrix A:";
     A.sumDiagonal();
 
-    //swap rows
+    //swap rows----------------------------------------
+    int rowa, rowb;
+    Matrix row_swap;
+
     std::cout << "Row Swap (swap 0 and 1 by default):\n";
-    Matrix row_swap = A.swapRows(0,1);
+    std::cout << "Pick rows?(Y/N): ";
+    char swap;
+    std::cin >> swap;
+
+    if (swap == 'Y')
+    {
+        std::cout << "First row to swap (starting at 0): ";
+        std::cin >> rowa;
+        std::cout << "Second row to swap (starting at 0): ";
+        std::cin >> rowb;
+
+        row_swap = A.swapRows(rowa,rowb);
+    }
+    else
+    {
+        row_swap = A.swapRows(0,1);
+    }
+
+
     if (row_swap.getMatrix() != A.getMatrix())// only prints result if there was a valid swap
     {
         row_swap.printMatrix();
@@ -322,6 +343,8 @@ void run(Matrix A, Matrix B)
     {
         col_swap.printMatrix();
     }
+
+    
 
 
 }
