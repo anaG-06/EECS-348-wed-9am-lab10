@@ -164,8 +164,8 @@ class Matrix
         {
             for (int j = 0; j < A.getSize(); j++)
             {
-                numA = A.matrix.at(i).at(j);
-                numB = B.matrix.at(i).at(j);
+                numA = A.matrix.at(i).at(j);// A[i][j]
+                numB = B.matrix.at(i).at(j);// B[i][j]
 
                 row.push_back(numA + numB); //add them together and push to row
             }
@@ -176,6 +176,44 @@ class Matrix
         
         return result;
 
+    }
+
+    //overloading multiplication
+    friend Matrix operator*(Matrix A, Matrix B)
+    {
+        int dim = A.getSize();
+        
+        Matrix result;
+        result.setSize(dim);
+
+        std::vector<int> row;
+       
+        int element = 0;
+        int numA;
+        int numB;
+        int temp_num;
+
+        for (int i = 0; i < dim; i++)
+        {
+            for (int j = 0; j < dim; j++)
+            {
+                for (int k = 0; k < dim; k++)
+                {
+                    numA = A.matrix.at(i).at(k);
+                    numB = B.matrix.at(k).at(j);
+
+                    temp_num = numA * numB;
+                    element += temp_num;
+
+                }
+                row.push_back(element);
+                element = 0;
+            }
+            result.matrix.push_back(row);
+            row.clear();
+        }
+
+        return result;
     }
 
 
@@ -190,8 +228,13 @@ void run(Matrix A, Matrix B)
     B.printMatrix();
 
     //adding matrices
-    Matrix product = A + B;
-    std::cout << "A + B: \n";
+    Matrix sum = A + B;
+    std::cout << "\nA + B: \n";
+    sum.printMatrix();
+
+    //
+    Matrix product = A * B;
+    std::cout << "\nA * B: \n";
     product.printMatrix();
 }
 
