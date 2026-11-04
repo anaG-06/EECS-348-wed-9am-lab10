@@ -313,10 +313,10 @@ void run(Matrix A, Matrix B)
 
     std::cout << "Row Swap (swap 0 and 1 by default):\n";
     std::cout << "Pick rows?(Y/N): ";
-    char swap;
-    std::cin >> swap;
+    char swap_r;
+    std::cin >> swap_r;
 
-    if (swap == 'Y')
+    if (swap_r == 'Y')
     {
         std::cout << "First row to swap (starting at 0): ";
         std::cin >> rowa;
@@ -338,7 +338,27 @@ void run(Matrix A, Matrix B)
 
     //swap cols
     std::cout << "Columns Swap (swap 0 and 1 by default):\n";
-    Matrix col_swap = A.swapCols(0,1);
+    Matrix col_swap;
+    int cola, colb;
+
+    std::cout << "Pick rows?(Y/N): ";
+    char swap_c;
+    std::cin >> swap_c;
+
+    if (swap_c == 'Y')
+    {
+        std::cout << "First col to swap (starting at 0): ";
+        std::cin >> cola;
+        std::cout << "Second col to swap (starting at 0): ";
+        std::cin >> colb;
+
+        col_swap = A.swapCols(cola,colb);
+    }
+    else
+    {
+        col_swap = A.swapCols(0,1);
+    }
+
     if (col_swap.getMatrix() != A.getMatrix())// only prints result if there was a valid swap
     {
         col_swap.printMatrix();
