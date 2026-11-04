@@ -52,6 +52,11 @@ class Matrix
     {
         this->n = n;
     }
+
+    std::vector<std::vector<int>> getMatrix()
+    {
+        return this->matrix;
+    }
     
     bool loadMatrix(std::string filename, int start)
     {
@@ -232,6 +237,52 @@ class Matrix
         std::cout << "\nSecondary Diagonal Sum: " << secondary<<"\n";
     }
 
+    Matrix swapRows(int rowA, int rowB)
+    {
+        int dim = this->getSize()-1;
+        Matrix swapped = *this;// copy to preserve original matrix
+
+        if (rowA < 0 || rowA > dim || rowB < 0 || rowB > dim)
+        {
+            std::cout << "Selected row(s) out of bounds.\n";
+        }
+        else
+        {
+            swapped.matrix.at(rowA).swap(swapped.matrix.at(rowB));
+        }
+
+        return swapped;
+
+    }
+
+    Matrix swapCols(int colA, int colB)
+    {
+        int tempA = 0; //holds element to be swapped
+        int tempB = 0; //holds element to be swapped
+
+        int dim = this->getSize()-1;
+        Matrix swapped = *this; //copy
+
+        if (colA < 0 || colA > dim || colB < 0 || colB > dim)
+        {
+            std::cout << "Selected column(s) out of bounds.\n";
+        }
+        else
+        {
+            //swaps cols element by element
+            for (int i = 0; i < dim; i++)
+            {
+                tempA = swapped.matrix.at(i).at(colA); //gets elements of colA
+                tempB = swapped.matrix.at(i).at(colB); //gets elements of colB
+
+                swapped.matrix.at(i).at(colA) = tempB;
+                swapped.matrix.at(i).at(colB) = tempA;
+            }
+        }
+
+        return swapped;
+    }
+
 };
 
 void run(Matrix A, Matrix B)
@@ -255,6 +306,22 @@ void run(Matrix A, Matrix B)
     //finding diagonals
     std::cout<< "\nDiagonal sums for Matrix A:";
     A.sumDiagonal();
+
+    //swap rows
+    std::cout << "Row Swap (swap 0 and 1 by default):\n";
+    Matrix row_swap = A.swapRows(0,1);
+    if (row_swap.getMatrix() != A.getMatrix())// only prints result if there was a valid swap
+    {
+        row_swap.printMatrix();
+    }
+
+    //swap cols
+    std::cout << "Columns Swap (swap 0 and 1 by default):\n";
+    Matrix col_swap = A.swapCols(0,1);
+    if (col_swap.getMatrix() != A.getMatrix())// only prints result if there was a valid swap
+    {
+        col_swap.printMatrix();
+    }
 
 
 }
